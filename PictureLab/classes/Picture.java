@@ -88,7 +88,7 @@ public class Picture extends SimplePicture
   /** Method to set the blue to 0 */
   public void zeroBlue()
   {
-    Pixel[][] pixels = this.getPixels2D();
+    Pixel[][] pixels = this.getPixels2D(); //gets an array of all the pixels
     for (Pixel[] rowArray : pixels)
     {
       for (Pixel pixelObj : rowArray)
@@ -96,6 +96,52 @@ public class Picture extends SimplePicture
         pixelObj.setBlue(0);
       }
     }
+  }
+  
+  /** Method to keep only the blue values in a picture */
+  public void keepOnlyBlue()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        pixelObj.setGreen(0);
+        pixelObj.setRed(0);
+      }
+    }
+  }
+  
+  /** Method to negate all pixels in a picture */
+  public void negate()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        pixelObj.setGreen(255 - pixelObj.getGreen());
+        pixelObj.setRed(255 - pixelObj.getRed());
+        pixelObj.setBlue(255 - pixelObj.getBlue());
+      }
+    } 
+  }
+  
+  /** Method to set the picture to greyscale */
+  public void greyscale()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        double avg = (pixelObj.getGreen() + pixelObj.getRed() + pixelObj.getBlue()) / 3;
+        pixelObj.setGreen(avg);
+        pixelObj.setRed(avg);
+        pixelObj.setBlue(avg);
+      }
+    } 
   }
   
   /** Method that mirrors the picture around a 

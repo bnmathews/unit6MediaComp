@@ -51,6 +51,22 @@ public class PictureTester
     swan.explore();
   }
   
+  /** Method to test keepOnlyBlue */
+  public static void testKeepOnlyBlue()
+  {
+    Picture top = new Picture("topgun.jpg");
+    top.keepOnlyBlue();
+    top.explore();
+  }
+  
+  /** Method to test negate */
+  public static void testNegate()
+  {
+    Picture gorge = new Picture("gorge.jpg");
+    gorge.negate();
+    gorge.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)

@@ -11,6 +11,53 @@ public class IntArrayWorker
     matrix = theMatrix;
   }
   
+  public int getColTotal(int col)
+  {
+      int coltotal = 0;
+      
+      for (int row = 0; row < matrix.length; row++)
+      {
+          coltotal += matrix[row][col];
+      }
+      
+      return coltotal;
+  }
+  
+  public int getLargest()
+  {
+      int largestnum = matrix[0][0];
+      
+      for (int row = 0; row < matrix.length; row++)
+      {
+          for (int col = 0; col < matrix[row].length; col++)
+          {
+              if (matrix[row][col] > largestnum)
+              {
+                  largestnum = matrix[row][col];
+              }
+          }
+      }
+      
+      return largestnum;
+  }
+  
+  public int getCount(int look)
+  {
+      int total = 0;
+      for (int row = 0; row < matrix.length; row++)
+      {
+          for (int col = 0; col < matrix[0].length; col++)
+          {
+            if (matrix[row][col] == look)
+            {
+                total++;
+            }
+          }
+      }
+      
+      return total;
+  }
+  
   /**
    * Method to return the total 
    * @return the total of the values in the array
@@ -86,8 +133,7 @@ public class IntArrayWorker
   {
     for (int row = 0; row < matrix.length; row++)
     {
-      for (int col = 0; col < matrix[0].length; 
-           col++)
+      for (int col = 0; col < matrix[0].length; col++)
       {
         if (row < col)
           matrix[row][col] = 1;
