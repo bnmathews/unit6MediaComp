@@ -131,22 +131,50 @@ public class Picture extends SimplePicture
   public void greyscale()
   {
     Pixel[][] pixels = this.getPixels2D();
-    
     for (Pixel[] rowArray : pixels)
     {
       for (Pixel pixelObj : rowArray)
       {
         double avg = (pixelObj.getGreen() + pixelObj.getRed() + pixelObj.getBlue()) / 3;
-        pixelObj.setGreen(avg);
-        pixelObj.setRed(avg);
-        pixelObj.setBlue(avg);
+        //pixelObj.setGreen(avg);
+        //pixelObj.setRed(avg);
+        //pixelObj.setBlue(avg);
       }
     } 
+  }
+  
+  /** Method that mirrors the picture vertically */
+  public void mirrorVertical()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    int width = pixels[0].length - 1;
+    for(int row = 0; row < pixels.length; row++)
+    {
+        for (int col = 0; col < pixels[row].length; col++)
+        {
+            pixels[row][width - col].setColor( pixels[row][col].getColor() );
+        }
+    }
+  }
+  
+  /** Method that mirrors the picture horizontally */
+  public void mirrorHorizontal()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    int height = pixels.length - 1;
+    for(int row = 0; row < pixels.length; row++)
+    {
+        for (int col = 0; col < pixels[row].length; col++)
+        {
+            pixels[height - row][col].setColor( pixels[row][col].getColor() );
+        }
+    }
   }
   
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
+  /*
   public void mirrorVertical()
   {
     Pixel[][] pixels = this.getPixels2D();
@@ -163,7 +191,8 @@ public class Picture extends SimplePicture
       }
     } 
   }
-  
+  */
+ 
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
