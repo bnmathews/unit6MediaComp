@@ -8,6 +8,24 @@
  */
 public class PictureTester
 {
+  /** Method to test deSize */
+  public static void testDeSize()
+  {
+    Picture isle = new Picture("CumberlandIsland.jpg");
+    Picture moto = new Picture("blueMotorcycle.jpg");
+    isle.deSize(moto,6,200,70);
+    isle.explore();
+  }
+  
+  /** Method to test reSize */
+  public static void testReSize()
+  {
+    Picture beach = new Picture("beach.jpg");
+    Picture robo = new Picture("robot.jpg");
+    beach.reSize(robo,2,0,0);
+    beach.explore();
+  }
+    
   /** Method to test zeroBlue */
   public static void testZeroBlue()
   {
@@ -17,13 +35,12 @@ public class PictureTester
     beach.explore();
   }
   
-  /** Method to test mirrorHorizontal */
-  public static void testMirrorHorizontal()
+  /** Method to test a custom horizontal mirror */
+  public static void testMirrorCustom()
   {
-    Picture wall = new Picture("wall.jpg");
-    wall.explore();
-    wall.mirrorHorizontal();
-    wall.explore();
+    Picture snow = new Picture("snowman.jpg");
+    snow.mirrorCustom(161,200,107,290,204,2);
+    snow.explore();
   }
   
   /** Method to test mirrorVertical */
@@ -74,6 +91,39 @@ public class PictureTester
     Picture gorge = new Picture("gorge.jpg");
     gorge.negate();
     gorge.explore();
+  }
+  
+  /** Method to test greyscale */
+  public static void testGreyscale()
+  {
+    Picture door = new Picture("thrudoor.jpg");
+    door.greyscale();
+    door.explore();
+  }
+  
+  /** Method to test noise */
+  public static void testNoise()
+  {
+    Picture swan = new Picture("swan.jpg");
+    swan.noise(200);
+    swan.explore();
+  }
+  
+  /** Method to test bars*/
+  public static void testBars()
+  {
+    Picture flower = new Picture("whiteFlower.jpg");
+    flower.bars();
+    flower.explore();
+  }
+  
+  public static void testCropAndCopy()
+  {
+    Picture mark = new Picture("blue-mark.jpg");
+    Picture moon = new Picture("moon-surface.jpg");
+    moon.cropAndCopy( mark, 160, 290, 260, 400, 60, 140 );
+    moon.cropAndCopy( mark, 160, 290, 260, 400, 200, 360 );
+    moon.explore();
   }
   
   /** Main method for testing.  Every class can have a main

@@ -127,6 +127,40 @@ public class Picture extends SimplePicture
     } 
   }
   
+  /** Method that stretches out the picture's pixels to the point of appearing like straight lines*/
+  public void bars()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    int height = pixels.length - 1;
+    int width = pixels[0].length - 1;
+    for(int row = 0; row < pixels.length; row++)
+    {
+        for (int col = 0; col < pixels[row].length; col++)
+        {
+            for (int col2 = pixels[row].length - 1 - col; col2 > col; col2--)
+            {
+                pixels[row][col2].setColor( pixels[row][col].getColor() );
+            }
+        }
+    }
+  }
+  
+  /** Method to add noise */
+  public void noise(int noisemult)
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Random r = new Random();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        pixelObj.setGreen(pixelObj.getGreen() - (r.nextInt() / (1999999999 / noisemult))); // this has to be a really small number
+        pixelObj.setRed(pixelObj.getRed() - (r.nextInt() / (1999999999 / noisemult)));
+        pixelObj.setBlue(pixelObj.getBlue() - (r.nextInt() / (1999999999 / noisemult)));
+      }
+    } 
+  }
+  
   /** Method to set the picture to greyscale */
   public void greyscale()
   {
@@ -135,10 +169,10 @@ public class Picture extends SimplePicture
     {
       for (Pixel pixelObj : rowArray)
       {
-        double avg = (pixelObj.getGreen() + pixelObj.getRed() + pixelObj.getBlue()) / 3;
-        //pixelObj.setGreen(avg);
-        //pixelObj.setRed(avg);
-        //pixelObj.setBlue(avg);
+        int avg = (pixelObj.getGreen() + pixelObj.getRed() + pixelObj.getBlue()) / 3;
+        pixelObj.setGreen(avg);
+        pixelObj.setRed(avg);
+        pixelObj.setBlue(avg);
       }
     } 
   }
@@ -171,6 +205,34 @@ public class Picture extends SimplePicture
     }
   }
   
+  /** Method that mirrors a specific part of the picture */
+  public void mirrorCustom(int rowStart, int rowStop, int colStart, int colStop, int mirrorPoint, int mirrorType)
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    int height = pixels.length - 1;
+    int width = pixels[0].length - 1;
+    if (mirrorType == 1) // this mirrors a specific part vertically
+    {
+        for(int row = rowStart; row < rowStop; row++)
+        {
+            for (int col = colStart; col < mirrorPoint; col++)
+            {
+                pixels[row][mirrorPoint - col + mirrorPoint].setColor( pixels[row][col].getColor() );
+            }
+        }
+    }
+    else
+    {
+        for(int row = rowStart; row < mirrorPoint; row++)
+        {
+            for (int col = colStart; col < colStop; col++)
+            {
+                pixels[mirrorPoint - row + mirrorPoint][col].setColor( pixels[row][col].getColor() );
+            }
+        }
+    }
+  }
+  
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
@@ -188,9 +250,9 @@ public class Picture extends SimplePicture
         leftPixel = pixels[row][col];
         rightPixel = pixels[row][width - 1 - col];
         rightPixel.setColor(leftPixel.getColor());
-      }
+      } 
     } 
-  }
+  } 
   */
  
   /** Mirror just part of a picture of a temple */
@@ -246,6 +308,83 @@ public class Picture extends SimplePicture
         toPixel.setColor(fromPixel.getColor());
       }
     }   
+  }
+  
+  public void cropAndCopy(Picture sourcePicture, int startSourceRow, int endSourceRow, int startSourceCol, int endSourceCol,
+         int startDestRow, int startDestCol)
+  {
+    Picture newPic = new Picture(sourcePicture);
+    Pixel[][] pixels = newPic.getPixels2D();
+    Pixel[][] ourpixels = this.getPixels2D();
+    int placeRow = startDestRow;
+    int placeCol = startDestCol;
+    for(int row = startSourceRow; row < endSourceRow; row++)
+    {
+        for (int col = startSourceCol; col < endSourceCol; col++)
+        {
+            ourpixels[placeRow][placeCol].setColor( pixels[row][col].getColor() );
+            placeCol++;
+        }
+        placeRow++;
+        placeCol = startDestCol;
+    }
+  }
+  
+  public void deSize(Picture sourcePicture, int sizeDivider, int destRow, int destCol)
+  {
+    Picture newPic = new Picture(sourcePicture);
+    Pixel[][] pixels = newPic.getPixels2D();
+    Pixel[][] ourpixels = this.getPixels2D();
+    int placeRow = destRow;
+    int placeCol = destCol;
+    for(int row = 0; row < pixels.length; row++)
+    {
+        for (int col = 0; col < pixels[row].length; col++)
+        {
+            if (row % sizeDivider == 0 && col % sizeDivider == 0)
+            {
+                ourpixels[placeRow][placeCol].setColor( pixels[row][col].getColor() );
+                placeCol++;
+            }
+        }
+        if (row % sizeDivider == 0)
+        {
+            placeRow++;
+        }
+        placeCol = destCol;
+    }
+  }
+  
+  public void reSize(Picture sourcePicture, int sizeMult, int destRow, int destCol)
+  {
+    Picture newPic = new Picture(sourcePicture);
+    Pixel[][] pixels = newPic.getPixels2D();
+    Pixel[][] ourPixels = this.getPixels2D();
+    int placeRow = destRow;
+    int placeCol = destCol;
+    int actualRow = 0;
+    int actualCol = 0;
+    
+    for(int row = 0; row < pixels.length * sizeMult; row++)
+    {
+        for (int col = 0; col < pixels[row].length * sizeMult; col++)
+        {
+            if (col % sizeMult == 0)
+            {
+                actualCol++;
+            }
+            System.out.println(actualCol);
+            ourPixels[placeRow][placeCol].setColor( pixels[actualRow][actualCol].getColor() );
+            placeCol+= sizeMult;
+        }
+        if (row % sizeMult == 0)
+        {
+            actualRow++;
+            actualCol = 0;
+        }
+        placeRow+= sizeMult;
+        placeCol = destCol;
+    }
   }
 
   /** Method to create a collage of several pictures */
