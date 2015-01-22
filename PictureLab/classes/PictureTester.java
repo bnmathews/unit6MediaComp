@@ -18,6 +18,7 @@ public class PictureTester
   }
   
   /** Method to test reSize */
+  /*
   public static void testReSize()
   {
     Picture beach = new Picture("beach.jpg");
@@ -25,6 +26,7 @@ public class PictureTester
     beach.reSize(robo,2,0,0);
     beach.explore();
   }
+  */
     
   /** Method to test zeroBlue */
   public static void testZeroBlue()
@@ -59,14 +61,6 @@ public class PictureTester
     temple.explore();
     temple.mirrorTemple();
     temple.explore();
-  }
-  
-  /** Method to test the collage method */
-  public static void testCollage()
-  {
-    Picture canvas = new Picture("640x480.jpg");
-    canvas.createCollage();
-    canvas.explore();
   }
   
   /** Method to test edgeDetection */
@@ -124,6 +118,14 @@ public class PictureTester
     moon.cropAndCopy( mark, 160, 290, 260, 400, 60, 140 );
     moon.cropAndCopy( mark, 160, 290, 260, 400, 200, 360 );
     moon.explore();
+  }
+  
+  /** Method to test the collage method */
+  public static void testCollage()
+  {
+      Picture canvas = new Picture(420, 608);
+      canvas.createCollage();
+      canvas.explore();
   }
   
   /** Main method for testing.  Every class can have a main

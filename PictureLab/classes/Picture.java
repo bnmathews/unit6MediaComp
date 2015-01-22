@@ -355,6 +355,7 @@ public class Picture extends SimplePicture
     }
   }
   
+  /*
   public void reSize(Picture sourcePicture, int sizeMult, int destRow, int destCol)
   {
     Picture newPic = new Picture(sourcePicture);
@@ -386,8 +387,10 @@ public class Picture extends SimplePicture
         placeCol = destCol;
     }
   }
-
+  */
+  
   /** Method to create a collage of several pictures */
+  /*
   public void createCollage()
   {
     Picture flower1 = new Picture("flower1.jpg");
@@ -403,7 +406,26 @@ public class Picture extends SimplePicture
     this.mirrorVertical();
     this.write("collage.jpg");
   }
-  
+  */
+ 
+  public void createCollage()
+  {
+    Picture atari = new Picture("vidya/atari2600ad.gif");
+    Picture atari2 = new Picture("vidya/atari2600ad.gif");
+    /*
+    this.cropAndCopy(atari,0,70,5,613,0,0);
+    atari.noise(5);
+    this.cropAndCopy(atari,0,70,5,613,70,0);
+    atari2.noise(65);
+    this.cropAndCopy(atari2,0,70,5,613,140,0);
+    */
+    for(int row = 0; row < 420; row+=70)
+    {
+        atari.noise(25);
+        this.cropAndCopy(atari,0,70,5,613,row,0);
+    }
+    this.write("collage.jpg");
+  }
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
