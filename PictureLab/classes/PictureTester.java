@@ -4,7 +4,8 @@
  * methods.  Uncomment the methods and the code
  * in the main to test.
  * 
- * @author Barbara Ericson 
+ * @author bnmathews
+ * @date January 22 2015
  */
 public class PictureTester
 {
@@ -16,17 +17,6 @@ public class PictureTester
     isle.deSize(moto,6,200,70);
     isle.explore();
   }
-  
-  /** Method to test reSize */
-  /*
-  public static void testReSize()
-  {
-    Picture beach = new Picture("beach.jpg");
-    Picture robo = new Picture("robot.jpg");
-    beach.reSize(robo,2,0,0);
-    beach.explore();
-  }
-  */
     
   /** Method to test zeroBlue */
   public static void testZeroBlue()
@@ -95,6 +85,22 @@ public class PictureTester
     door.explore();
   }
   
+  /** Method to test posterize */
+  public static void testPosterize()
+  {
+    Picture koala = new Picture("koala.jpg");
+    koala.posterize();
+    koala.explore();
+  }
+  
+  /** Method to test oddDistort */
+  public static void testOddDistort()
+  {
+    Picture lion = new Picture("femaleLionAndHall.jpg");
+    lion.oddDistort(252,525);
+    lion.explore();
+  }
+  
   /** Method to test noise */
   public static void testNoise()
   {
@@ -123,7 +129,7 @@ public class PictureTester
   /** Method to test the collage method */
   public static void testCollage()
   {
-      Picture canvas = new Picture(420, 608);
+      Picture canvas = new Picture(420, 669);
       canvas.createCollage();
       canvas.explore();
   }
@@ -135,7 +141,7 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
-    testZeroBlue();
+    //testZeroBlue();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();

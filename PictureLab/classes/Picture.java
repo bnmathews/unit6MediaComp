@@ -11,7 +11,8 @@ import java.util.List; // resolves problem with java.awt.List and java.util.List
  * SimplePicture and allows the student to add functionality to
  * the Picture class.  
  * 
- * @author Barbara Ericson ericson@cc.gatech.edu
+ * @author bnmathews
+ * @date January 22 2015
  */
 public class Picture extends SimplePicture 
 {
@@ -145,6 +146,33 @@ public class Picture extends SimplePicture
     }
   }
   
+  /** Method to distort the image, but in an unusual way (because I'm too lazy to code a uniform distortion method) */
+  public void oddDistort(int rowDist, int colDist)
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Random randRow = new Random();
+    Random randCol = new Random();
+    int getRow = 0;
+    int getCol = 0;
+    for(int row = 0; row < pixels.length; row++)
+    {
+      for (int col = 0; col < pixels[row].length; col++)
+      {
+        getRow = randRow.nextInt(rowDist);
+        getCol = randCol.nextInt(colDist);
+        if (row + getRow > pixels.length - 1)
+        {
+            getRow = 0;
+        }
+        if (col + getCol > pixels[row].length - 1)
+        {
+            getCol = 0;
+        }
+        pixels[row][col].setColor( pixels[row + getRow][col + getCol].getColor() );
+      }
+    }
+  }
+  
   /** Method to add noise */
   public void noise(int noisemult)
   {
@@ -173,6 +201,68 @@ public class Picture extends SimplePicture
         pixelObj.setGreen(avg);
         pixelObj.setRed(avg);
         pixelObj.setBlue(avg);
+      }
+    } 
+  }
+  
+  /** Method to posterize the image */
+  public void posterize()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+          if ( pixelObj.getRed() > 192)
+          {
+              pixelObj.setRed(223);
+          }
+          else if ( pixelObj.getRed() > 128)
+          {
+              pixelObj.setRed(159);
+          }
+          else if ( pixelObj.getRed() > 64)
+          {
+              pixelObj.setRed(95);
+          }
+          else if ( pixelObj.getRed() > 0)
+          {
+              pixelObj.setRed(31);
+          }
+          
+          if ( pixelObj.getGreen() > 192)
+          {
+              pixelObj.setGreen(223);
+          }
+          else if ( pixelObj.getGreen() > 128)
+          {
+              pixelObj.setGreen(159);
+          }
+          else if ( pixelObj.getGreen() > 64)
+          {
+              pixelObj.setGreen(95);
+          }
+          else if ( pixelObj.getGreen() > 0)
+          {
+              pixelObj.setGreen(31);
+          }
+          
+          if ( pixelObj.getBlue() > 192)
+          {
+              pixelObj.setBlue(223);
+          }
+          else if ( pixelObj.getBlue() > 128)
+          {
+              pixelObj.setBlue(159);
+          }
+          else if ( pixelObj.getBlue() > 64)
+          {
+              pixelObj.setBlue(95);
+          }
+          else if ( pixelObj.getBlue() > 0)
+          {
+              pixelObj.setBlue(31);
+          }
       }
     } 
   }
@@ -232,28 +322,6 @@ public class Picture extends SimplePicture
         }
     }
   }
-  
-  /** Method that mirrors the picture around a 
-    * vertical mirror in the center of the picture
-    * from left to right */
-  /*
-  public void mirrorVertical()
-  {
-    Pixel[][] pixels = this.getPixels2D();
-    Pixel leftPixel = null;
-    Pixel rightPixel = null;
-    int width = pixels[0].length;
-    for (int row = 0; row < pixels.length; row++)
-    {
-      for (int col = 0; col < width / 2; col++)
-      {
-        leftPixel = pixels[row][col];
-        rightPixel = pixels[row][width - 1 - col];
-        rightPixel.setColor(leftPixel.getColor());
-      } 
-    } 
-  } 
-  */
  
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
@@ -355,75 +423,27 @@ public class Picture extends SimplePicture
     }
   }
   
-  /*
-  public void reSize(Picture sourcePicture, int sizeMult, int destRow, int destCol)
-  {
-    Picture newPic = new Picture(sourcePicture);
-    Pixel[][] pixels = newPic.getPixels2D();
-    Pixel[][] ourPixels = this.getPixels2D();
-    int placeRow = destRow;
-    int placeCol = destCol;
-    int actualRow = 0;
-    int actualCol = 0;
-    
-    for(int row = 0; row < pixels.length * sizeMult; row++)
-    {
-        for (int col = 0; col < pixels[row].length * sizeMult; col++)
-        {
-            if (col % sizeMult == 0)
-            {
-                actualCol++;
-            }
-            System.out.println(actualCol);
-            ourPixels[placeRow][placeCol].setColor( pixels[actualRow][actualCol].getColor() );
-            placeCol+= sizeMult;
-        }
-        if (row % sizeMult == 0)
-        {
-            actualRow++;
-            actualCol = 0;
-        }
-        placeRow+= sizeMult;
-        placeCol = destCol;
-    }
-  }
-  */
-  
   /** Method to create a collage of several pictures */
-  /*
   public void createCollage()
   {
-    Picture flower1 = new Picture("flower1.jpg");
-    Picture flower2 = new Picture("flower2.jpg");
-    this.copy(flower1,0,0);
-    this.copy(flower2,100,0);
-    this.copy(flower1,200,0);
-    Picture flowerNoBlue = new Picture(flower2);
-    flowerNoBlue.zeroBlue();
-    this.copy(flowerNoBlue,300,0);
-    this.copy(flower1,400,0);
-    this.copy(flower2,500,0);
-    this.mirrorVertical();
-    this.write("collage.jpg");
-  }
-  */
- 
-  public void createCollage()
-  {
-    Picture atari = new Picture("vidya/atari2600ad.gif");
-    Picture atari2 = new Picture("vidya/atari2600ad.gif");
-    /*
-    this.cropAndCopy(atari,0,70,5,613,0,0);
-    atari.noise(5);
-    this.cropAndCopy(atari,0,70,5,613,70,0);
-    atari2.noise(65);
-    this.cropAndCopy(atari2,0,70,5,613,140,0);
-    */
-    for(int row = 0; row < 420; row+=70)
-    {
-        atari.noise(25);
-        this.cropAndCopy(atari,0,70,5,613,row,0);
-    }
+    Picture naut = new Picture("naut.png");
+    Picture naut2 = new Picture("naut.png");
+    Picture naut3 = new Picture("naut.png");
+    Picture naut4 = new Picture("naut.png");
+    Picture naut5 = new Picture("naut.png");
+    Picture naut6 = new Picture("naut.png");
+    this.deSize(naut,3,0,0);
+    naut2.negate();
+    this.deSize(naut2,3,0,223);
+    naut3.mirrorVertical();
+    naut3.mirrorHorizontal();
+    this.deSize(naut3,3,0,446);
+    naut4.noise(200);
+    this.deSize(naut4,3,210,0);
+    naut5.posterize();
+    this.deSize(naut5,3,210,223);
+    naut6.oddDistort(1,140);
+    this.deSize(naut6,3,210,446);
     this.write("collage.jpg");
   }
   
